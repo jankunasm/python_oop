@@ -45,9 +45,38 @@ class Item:
                 price = float(item.get('price')),
                 quantity = float(item.get('quantity')),
             )
+    @staticmethod    
+    def is_integer(num):
+        # We will count out the floats that are point zero for i.e. 5.0, 10.0
+        if isinstance(num, float):
+            return num.is_integer()
+        elif isinstance(num, int):
+            return True
+        else:
+            return False
             
     def __repr__(self):
         return f"Item('{self.name}', {self.price}, {self.quantity})"
+
+
+class Phone(Item):
+    
+    def __init__(self, name: str, price: float, quantity: float, broken_phones=0):
+        # Call to super function to have access to all attributes / methods
+        super().__init__(
+            name, price, quantity
+        )
+        assert broken_phones >= 0, f"Broken Phones {broken_phones} cannot be under 0!"
+        
+        self.broken_phones = broken_phones
+
+phone1 = Phone("iphone10", 500, 5, 1)
+print(phone1.calculate_total_price())
+phone2 = Phone("iphone11", 700, 5, 1)
+
+print(Item.all)
+print(Phone.all)
+
 
 item1 = Item("Snapple", 2, 200)
 
@@ -65,6 +94,8 @@ for instance in Item.all:
     
 Item.instantiate_from_csv()
 print(Item.all)
+
+print(Item.is_integer(7))
 
 # item1.apply_discount()
 # item2.apply_discount()
